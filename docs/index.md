@@ -9,6 +9,13 @@ Using two Raspberry Pi chips, two Pi camera modules, and an LCD, we have created
 1. One of the Raspberry Pi chips and the Pi camera modules are placed in the front of the vehicle and act a smart dashcam. The camera records footage during your trip. When you arrive home, the Raspberry Pi connects to your home WiFi network and uploads the recorded footage to your Google Drive.
 2. The other Raspberry Pi and Pi camera are placed in the back of the car. The camera video stream of the Pi camera is served over a UDP server. The front Raspberry Pi connects to this server and displays this video stream on an LCD.
 
+## Demonstartion Videos:
+
+Backup Camera and Display:  https://www.youtube.com/watch?v=xK_BoOPaq-Q
+
+Dashcam, authenticate via bluetooth, and upload:  https://www.youtube.com/watch?v=CpvrdHVSZEg&feature=youtu.be
+
+
 ## Hardware Necessary
 
 -   2x [Raspberry Pi 3B](https://www.amazon.com/Raspberry-Pi-MS-004-00000024-Model-Board/dp/B01LPLPBS8) (Raspberry Pi Zero should work as well)
@@ -23,6 +30,7 @@ Using two Raspberry Pi chips, two Pi camera modules, and an LCD, we have created
 
 1. Connect one Raspberry Pi Camera Module to each Raspberry Pi.
 2. Connect the HDMI touch display to the Raspberry Pi that will be on the front.
+3. After finishing software setup and ensuring it works, attach the front and back pi's to your desired locations on your vehicle.
 
 ## Software Setup
 
@@ -79,10 +87,16 @@ network={
 
 4. Setup each pi to autostart the following commands, this can be done in nano ~/.config/lxsession/LXDE-pi/autostart with the format '@command....' this file may be in a different location depending on your raspbian version.
 
-4a. On the front pi. Ensure the following autostarts 'python3 dashcam.py' 'python3 server.py' 'path/to/Camera_Streaming_Code/server UDP_PORT' where UDP_PORT is the number of the port you wish to use.
-
-4b. On the back pi. Ensure the following autostarts 'path/to/Camera_Streaming_Code/client IP_OF_FRONT PI UDP_PORT' where UDP_PORT is the number of the port you selected earlier and IP_OF_FRONT_PI is the only possible ip that the dhcpcd server will give out that you selected ealrier
-
+4a. On the front pi. Ensure the following autostarts:
+```
+'python3 dashcam.py' 
+'python3 server.py'
+'path/to/Camera_Streaming_Code/server UDP_PORT' where UDP_PORT is the number of the port you wish to use.
+```
+4b. On the back pi. Ensure the following autostarts:
+```
+'path/to/Camera_Streaming_Code/client IP_OF_FRONT PI UDP_PORT' where UDP_PORT is the number of the port you selected earlier and IP_OF_FRONT_PI is the only possible ip that the dhcpcd server will give out that you selected ealrier
+```
 5.If you wish to use a button to send the signal to upload the dashcam's footage to google drive, add a button in the specified port in dashcam.py, if not comment out all GPIO code. It is recommended you use a time.sleep() delay if you are not using a button to ensure the car is outside the range of the home network before it begins checking, in order to prevent instant uploads while still in your homes garage.
 
 6. If you have not already install pybluez and pydrive, these should be available in the pip repositories(pip3 install pkgname), pybluez must be installed as sudo
