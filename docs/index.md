@@ -90,7 +90,7 @@ network={
 4a. On the front pi. Ensure the following autostarts:
 ```
 'python3 dashcam.py' 
-'python3 server.py'
+'sudo python3 server.py'
 'path/to/Camera_Streaming_Code/server UDP_PORT' where UDP_PORT is the number of the port you wish to use.
 ```
 4b. On the back pi. Ensure the following autostarts:
