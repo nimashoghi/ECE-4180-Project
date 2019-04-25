@@ -2,9 +2,8 @@
 
 ### By Nima Shoghi Ghalehshahi and Ridge Ross <!-- omit in toc -->
 
-## Table of Contents
+## Table of Contents <!-- omit in toc -->
 
-- [Table of Contents](#table-of-contents)
 - [Project Idea](#project-idea)
 - [Demonstration Videos](#demonstration-videos)
 - [Hardware Necessary](#hardware-necessary)
