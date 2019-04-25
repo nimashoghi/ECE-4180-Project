@@ -30,7 +30,8 @@ Dashcam, authenticate via bluetooth, and upload:  https://www.youtube.com/watch?
 
 1. Connect one Raspberry Pi Camera Module to each Raspberry Pi.
 2. Connect the HDMI touch display to the Raspberry Pi that will be on the front.
-3. After finishing software setup and ensuring it works, attach the front and back pi's to your desired locations on your vehicle.
+3. If using a wireless connection, connect the usb wifi adapter to the Raspberry Pi that will be in the front.
+4. After finishing software setup and ensuring it works, attach the front and back Pi's to your desired locations on your vehicle.
 
 ## Software Setup
 
