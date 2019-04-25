@@ -65,11 +65,11 @@ The Raspberry Pi acting as the backup camera and sender will be referred to as '
 
 2. If you are using a wireless connection to connect the front and back pi's follow the following steps, if not skip to step 3.
 
-    1. Setup the Back PI as an access point: https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md is a good guide on how to do so.
+    - Setup the Back PI as an access point: https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md is a good guide on how to do so.
 
-    2. Setup the DHCPCD server on the back Pi to only allow for one other IP address, making the front Pi's IP address, for all intents of purposes, static.
+    - Setup the DHCPCD server on the back Pi to only allow for one other IP address, making the front Pi's IP address, for all intents of purposes, static.
 
-    3. On the front PI in /etc/network/interfaces add the following lines, ensure there are no preexisting lines conflicting these
+    - On the front PI in /etc/network/interfaces add the following lines, ensure there are no preexisting lines conflicting these
 
         ```
         iface wlan0 inet manual
@@ -80,7 +80,7 @@ The Raspberry Pi acting as the backup camera and sender will be referred to as '
         wpa-roam /etc/wpa_supplicant/wpa_supplicant_wlan1.conf
         ```
 
-    4. In /etc/wpa_supplicant/wpa_supplicant_wlan0.conf add the following lines, changing home_network_ssid and password to match your home network settings:
+    - In /etc/wpa_supplicant/wpa_supplicant_wlan0.conf add the following lines, changing home_network_ssid and password to match your home network settings:
 
         ```
         ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -95,9 +95,9 @@ The Raspberry Pi acting as the backup camera and sender will be referred to as '
         ```
 
 
-    5. If you have multiple networks, add another `network={...}` for each one in the same format.
+    - If you have multiple networks, add another `network={...}` for each one in the same format.
 
-    6. Add the following lines to /etc/wpa_supplicant/wpa_supplicant_wlan1.conf`, changing the Back_Pi... fields to match your settings when setting up the back Raspberry Pi:
+    - Add the following lines to /etc/wpa_supplicant/wpa_supplicant_wlan1.conf`, changing the Back_Pi... fields to match your settings when setting up the back Raspberry Pi:
 
         ```
         ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -115,7 +115,7 @@ The Raspberry Pi acting as the backup camera and sender will be referred to as '
 
 4. Setup each Pi to autostart the following commands, this can be done in `nano ~/.config/lxsession/LXDE-pi/autostart` with the format `@command....` this file may be in a different location depending on your Raspbian version.
 
-    1. On the front Pi. Ensure the following autostarts:
+    - On the front Pi. Ensure the following autostarts:
 
         ```
         'python3 dashcam.py'
@@ -123,7 +123,7 @@ The Raspberry Pi acting as the backup camera and sender will be referred to as '
         'path/to/Camera_Streaming_Code/server UDP_PORT' where UDP_PORT is the number of the port you wish to use.
         ```
 
-    2. On the back Pi. Ensure the following autostarts:
+    - On the back Pi. Ensure the following autostarts:
 
         ```
         'path/to/Camera_Streaming_Code/client IP_OF_FRONT PI UDP_PORT' where UDP_PORT is the number of the port you selected earlier and IP_OF_FRONT_PI is the only possible IP that the DHCPCD server will give out that you selected ealrier
