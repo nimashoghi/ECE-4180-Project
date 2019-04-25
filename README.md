@@ -65,72 +65,75 @@ The Raspberry Pi acting as the backup camera and sender will be referred to as '
 
 2. If you are using a wireless connection to connect the front and back pi's follow the following steps, if not skip to step 3.
 
-    2a. Setup the Back PI as an access point: https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md is a good guide on how to do so.
+    1. Setup the Back PI as an access point: https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md is a good guide on how to do so.
 
-    2b. Setup the DHCPCD server on the back Pi to only allow for one other IP address, making the front Pi's IP address, for all intents of purposes, static.
+    2. Setup the DHCPCD server on the back Pi to only allow for one other IP address, making the front Pi's IP address, for all intents of purposes, static.
 
-    2c. On the front PI in /etc/network/interfaces add the following lines, ensure there are no preexisting lines conflicting these
+    3. On the front PI in /etc/network/interfaces add the following lines, ensure there are no preexisting lines conflicting these
 
-    ```iface wlan0 inet manual
+        ```
+        iface wlan0 inet manual
         wpa-roam /etc/wpa_supplicant/wpa_supplicant_wlan0.conf
 
-    allow-hotplug wlan1
-    iface wlan1 inet manual
+        allow-hotplug wlan1
+        iface wlan1 inet manual
         wpa-roam /etc/wpa_supplicant/wpa_supplicant_wlan1.conf
-    ```
+        ```
 
-    2d. In /etc/wpa_supplicant/wpa_supplicant_wlan0.conf add the following lines, changing home_network_ssid and password to match your home network settings:
+    4. In /etc/wpa_supplicant/wpa_supplicant_wlan0.conf add the following lines, changing home_network_ssid and password to match your home network settings:
 
-    ```
-    ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-    update_config=1
-    country=US
+        ```
+        ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+        update_config=1
+        country=US
 
-    network={
-            ssid="home_network_ssid"
-            psk="home_network_password"
-            key_mgmt=WPA-PSK
-    }
-    ```
+        network={
+                ssid="home_network_ssid"
+                psk="home_network_password"
+                key_mgmt=WPA-PSK
+        }
+        ```
 
-    2e. If you have multiple networks, add another `network={...}` for each one in the same format.
-    2f. Add the following lines to /etc/wpa_supplicant/wpa_supplicant_wlan1.conf`, changing the Back_Pi... fields to match your settings when setting up the back Raspberry Pi:
 
-    ```
-    ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-    update_config=1
-    country=US
+    5. If you have multiple networks, add another `network={...}` for each one in the same format.
 
-    network={
-            ssid="Back_Pi_Network_Name"
-            psk="Back_Pi_Password"
-            key_mgmt=WPA-PSK
-    }
-    ```
+    6. Add the following lines to /etc/wpa_supplicant/wpa_supplicant_wlan1.conf`, changing the Back_Pi... fields to match your settings when setting up the back Raspberry Pi:
+
+        ```
+        ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+        update_config=1
+        country=US
+
+        network={
+                ssid="Back_Pi_Network_Name"
+                psk="Back_Pi_Password"
+                key_mgmt=WPA-PSK
+        }
+        ```
 
 3. Compile the code in `Camera_Streaming_Code` on both the front and back Pi's using `cmake . & make`
 
 4. Setup each Pi to autostart the following commands, this can be done in `nano ~/.config/lxsession/LXDE-pi/autostart` with the format `@command....` this file may be in a different location depending on your Raspbian version.
 
-    4a. On the front Pi. Ensure the following autostarts:
+    1. On the front Pi. Ensure the following autostarts:
 
-    ```
-    'python3 dashcam.py'
-    'sudo python3 server.py'
-    'path/to/Camera_Streaming_Code/server UDP_PORT' where UDP_PORT is the number of the port you wish to use.
-    ```
+        ```
+        'python3 dashcam.py'
+        'sudo python3 server.py'
+        'path/to/Camera_Streaming_Code/server UDP_PORT' where UDP_PORT is the number of the port you wish to use.
+        ```
 
-    4b. On the back Pi. Ensure the following autostarts:
+    2. On the back Pi. Ensure the following autostarts:
 
-    ```
-    'path/to/Camera_Streaming_Code/client IP_OF_FRONT PI UDP_PORT' where UDP_PORT is the number of the port you selected earlier and IP_OF_FRONT_PI is the only possible IP that the DHCPCD server will give out that you selected ealrier
-    ```
+        ```
+        'path/to/Camera_Streaming_Code/client IP_OF_FRONT PI UDP_PORT' where UDP_PORT is the number of the port you selected earlier and IP_OF_FRONT_PI is the only possible IP that the DHCPCD server will give out that you selected ealrier
+        ```
 
 5. If you wish to use a button to send the signal to upload the dashcam's footage to Google Drive, add a button in the specified port in dashcam.py, if not comment out all GPIO code. It is recommended you use a time.sleep() delay if you are not using a button to ensure the car is outside the range of the home network before it begins checking, in order to prevent instant uploads while still in your homes garage.
 
 6. If you have not already install pybluez and pydrive, these should be available in the pip repositories (pip3 install [package-name]), pybluez must be installed as sudo. Follow the instructions [here](https://github.com/EnableTech/raspberry-bluetooth-demo/blob/master/README.md) and [here](https://www.raspberrypi.org/forums/viewtopic.php?f=63&t=133263) for setting up the RFCOMM Bluetooth serial server support.
 
-7. Setup a Google developer account, create a project with Google Drive API permissions, and add the client_secrets.json to the same folder that contains the dashcam.py file.
+7. Setup a Google developer account, create a project with Google Drive API permissions, and add the client_secrets.json to the same folder that contains the dashcam.py file. [Look here](https://www.iperiusbackup.net/en/how-to-enable-google-drive-api-and-get-client-credentials/) for more information on how to enable Google Drive API access.
 
 8. Reboot both Pi's and the server should automatically connect, pressing the button or waiting for internet connection(depending on how it was configured) should cause the dashcam footage to be uploaded to Google Drive.
 
@@ -138,11 +141,11 @@ The Raspberry Pi acting as the backup camera and sender will be referred to as '
 
 #### Setting Up and Compiling
 
-1. Install the latest versions of Node.JS, Yarn, and Android Studio.
+1. Install the latest versions of [Node.JS](https://nodejs.org/en/), [Yarn](https://yarnpkg.com/en/), and [Android Studio](https://developer.android.com/studio).
 2. Set the environment variable `ANDROID_HOME` to the location of your Android SDK directory (e.g. `C:\Users\nimas\AppData\Local\Android\Sdk`)
 3. Clone this repository and navigate to the src/mobile-app directory.
 4. Execute the following command in your terminal: `yarn`
-5. Enable developer mode and USB debugging on your phone ([look here for instructions](https://www.phonearena.com/news/How-to-enable-USB-debugging-on-Android_id53909)).
+5. Enable developer mode and USB debugging on your phone. [Look here](https://www.phonearena.com/news/How-to-enable-USB-debugging-on-Android_id53909) for instructions on how to enable USB debugging.
 6. Connect your phone to your computer through USB and allow USB debugging.
 7. Run `npx react-native run-android` to compile and run the application on your phone.
 
