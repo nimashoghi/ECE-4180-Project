@@ -104,3 +104,5 @@ network={
 7. Setup a google developer account, create a project with google api permissions, and add the client_secrets.json to the same folder that contains the dashcam.py file.
 
 8. Reboot both pi's and the server should automatically connect, pressing the button or waiting for internet connection(depending on how it was configured) should cause the dashcam footage to be uploaded to google drive.
+
+### For The Bluetooth mobile app:
