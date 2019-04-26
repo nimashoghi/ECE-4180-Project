@@ -1,8 +1,9 @@
 # Smart Dashcam and Backup Camera <!-- omit in toc -->
 
 
-
 ### By Nima Shoghi Ghalehshahi and Ridge Ross <!-- omit in toc -->
+
+### If on github pages and wish to see code, please click link to repository in top right<!-- omit in toc -->
 
 
 ## Table of Contents <!-- omit in toc -->
