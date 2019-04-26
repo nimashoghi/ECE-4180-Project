@@ -4,7 +4,6 @@
 
 ### By Nima Shoghi Ghalehshahi and Ridge Ross <!-- omit in toc -->
 
-### Please Click Link in Top Right for code.<!-- omit in toc -->
 
 ## Table of Contents <!-- omit in toc -->
 
